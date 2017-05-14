@@ -2,29 +2,35 @@ package com.example.cukier.cukier;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.cukier.cukier.adapters.RecipeAdapter;
+import com.example.cukier.cukier.comparators.RecipeLevelComparator;
+import com.example.cukier.cukier.comparators.RecipeTimeComparator;
 import com.example.cukier.cukier.model.Recipe;
+import com.example.cukier.cukier.service.RecipeServiceManager;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView root;
     private RecipeAdapter recipeAdapter;
+    private List<Recipe> recipeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         root = (ListView) findViewById(R.id.recipeList);
 
-        List<Recipe> recipeList = new ArrayList<>();
-        recipeList.add(new Recipe());
-        recipeList.add(new Recipe());
-        recipeList.add(new Recipe());
-        recipeList.add(new Recipe());
-        recipeList.add(new Recipe());
+        recipeList = RecipeServiceManager.getInstance().getRecipes();
+//        recipeList.add(new Recipe());
+//        recipeList.add(new Recipe());
+//        recipeList.add(new Recipe());
+//        recipeList.add(new Recipe());
+//        recipeList.add(new Recipe());
 
         recipeAdapter = new RecipeAdapter(this, recipeList);
         root.setAdapter(recipeAdapter);
@@ -70,16 +76,34 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.levelSort) {
+            levelSort();
+            return true;
+        } else if( id == R.id.timeSort){
+            timeSort();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void navigateToRecipe() {
+    private void timeSort(){
+        Collections.sort(recipeList, new RecipeTimeComparator());
+        recipeAdapter = new RecipeAdapter(this, recipeList);
+        root.setAdapter(recipeAdapter);
+    }
+
+    private void levelSort(){
+        Collections.sort(recipeList, new RecipeLevelComparator());
+        recipeAdapter = new RecipeAdapter(this, recipeList);
+        root.setAdapter(recipeAdapter);
+    }
+
+    public void navigateToRecipe(Recipe recipe, String level) {
         Intent intent = new Intent(this, SingleRecipeActivity.class);
 //        intent.putExtra("sphere", text);
+        intent.putExtra("recipe", recipe);
+        intent.putExtra("level", level);
         startActivity(intent);
     }
 }

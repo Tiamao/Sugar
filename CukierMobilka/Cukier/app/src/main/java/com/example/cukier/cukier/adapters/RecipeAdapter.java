@@ -6,11 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.cukier.cukier.MainActivity;
 import com.example.cukier.cukier.R;
+import com.example.cukier.cukier.model.DifficultyLevel;
 import com.example.cukier.cukier.model.Recipe;
+import com.example.cukier.cukier.service.DifficultyLevelServiceManager;
 
 import java.util.List;
 
@@ -48,9 +52,20 @@ public class RecipeAdapter extends ArrayAdapter{
 //            spheresActivity.navigateToActs(button.getText().toString());
 //        });
 
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
+        TextView title = (TextView) convertView.findViewById(R.id.title);
+        TextView duration = (TextView) convertView.findViewById(R.id.duration);
+        TextView level = (TextView) convertView.findViewById(R.id.level);
+
+        title.setText(recipe.getName());
+        duration.setText(String.valueOf(recipe.getPreparationTime()) + " min");
+        DifficultyLevel levl = DifficultyLevelServiceManager.getInstance().getLevelById(recipe.getDifficultyLevelID());
+        level.setText(levl.getLevel());
+
+
         RelativeLayout relativeLayout = (RelativeLayout) convertView.findViewById(R.id.row);
         relativeLayout.setOnClickListener(e->{
-            activity.navigateToRecipe();
+            activity.navigateToRecipe(recipe, levl.getLevel());
         });
 
         // Return the completed view to render on screen

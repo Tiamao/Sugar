@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="113dp"
         android:id="@+id/row"
-        android:layout_margin="15dp"
+        android:layout_margin="10dp"
         android:layout_weight="0.00">
 
         <ImageView
@@ -31,7 +31,8 @@
             android:id="@+id/title"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <TextView
             android:text="[ikona] 20min"
@@ -42,7 +43,8 @@
             android:id="@+id/duration"
             android:layout_toEndOf="@+id/imageView"
             android:layout_below="@+id/title"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:text="łatwy"
@@ -54,7 +56,8 @@
             android:layout_below="@+id/title"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/duration"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
