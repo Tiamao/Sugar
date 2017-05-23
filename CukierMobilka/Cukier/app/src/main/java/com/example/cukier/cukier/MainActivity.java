@@ -14,6 +14,9 @@ import com.example.cukier.cukier.comparators.RecipeLevelComparator;
 import com.example.cukier.cukier.comparators.RecipeTimeComparator;
 import com.example.cukier.cukier.model.Recipe;
 import com.example.cukier.cukier.service.RecipeServiceManager;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView root;
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipeList;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build(); // .addTestDevice("DDDFB8AD75B7ADB171A775DDE8145B06").addTestDevice("")
+        mAdView.loadAd(adRequest);
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
 
         root = (ListView) findViewById(R.id.recipeList);
 
