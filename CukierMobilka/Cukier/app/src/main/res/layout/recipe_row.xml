@@ -3,18 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#535353"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:layout_marginTop="20dp"
     android:weightSum="1">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="113dp"
         android:id="@+id/row"
+        android:background="#535353"
         android:layout_margin="10dp"
-        android:layout_weight="0.00">
+        android:layout_weight="0.00"
+        android:layout_height="80dp">
 
         <ImageView
             android:layout_height="110dp"
-            app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/imageView"
             android:layout_weight="0.08"
             android:layout_alignParentTop="true"
@@ -25,39 +29,52 @@
 
         <TextView
             android:text="Jakiś ekstra tytuł"
+            android:textColor="#FFFFFF"
             android:gravity="center"
-            android:layout_width="256dp"
-            android:layout_height="55dp"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
             android:id="@+id/title"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:textAlignment="center"
             android:textSize="20sp" />
 
-        <TextView
-            android:text="[ikona] 20min"
-            android:gravity="center"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView"
-            android:id="@+id/duration"
-            android:layout_toEndOf="@+id/imageView"
-            android:layout_below="@+id/title"
-            android:textAlignment="center"
-            android:textSize="18sp" />
 
-        <TextView
-            android:text="łatwy"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/level"
-            android:layout_alignBottom="@+id/duration"
-            android:layout_below="@+id/title"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/duration"
-            android:textAlignment="center"
-            android:textSize="18sp" />
+
+            <TextView
+                android:text="20min"
+                android:layout_marginLeft="15dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@mipmap/ic_schedule"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView"
+                android:id="@+id/duration"
+                android:layout_toEndOf="@+id/imageView"
+                android:layout_below="@+id/title"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:text="łatwy"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/level"
+                android:drawableStart="@mipmap/ic_done"
+                android:layout_alignBottom="@+id/duration"
+                android:layout_below="@+id/title"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/duration"
+                android:textAlignment="center"
+                android:textSize="18sp"/>
+
+
+
 
     </RelativeLayout>
 

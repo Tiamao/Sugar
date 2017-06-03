@@ -4,6 +4,12 @@
     tools:context="com.example.cukier.cukier.MainActivity"
     
     >
+    <item android:id="@+id/home"
+        android:title="home"
+        android:icon="@mipmap/ic_home"
+        app:showAsAction="always"
+        android:onClick="defaultScreen"
+        android:checkable="true" />
     <item
         android:id="@+id/levelSort"
         android:orderInCategory="100"
@@ -14,4 +20,12 @@
         android:id="@+id/timeSort"
         android:orderInCategory="110"
         android:title="po czasie przygotowania" />
+
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@mipmap/ic_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+
+
 </menu>

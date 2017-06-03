@@ -1,6 +1,12 @@
 package com.example.cukier.cukier.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +21,10 @@ import com.example.cukier.cukier.R;
 import com.example.cukier.cukier.model.DifficultyLevel;
 import com.example.cukier.cukier.model.Recipe;
 import com.example.cukier.cukier.service.DifficultyLevelServiceManager;
+import com.koushikdutta.ion.Ion;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -57,6 +66,9 @@ public class RecipeAdapter extends ArrayAdapter{
         TextView duration = (TextView) convertView.findViewById(R.id.duration);
         TextView level = (TextView) convertView.findViewById(R.id.level);
 
+//        downloadImageTask = new DownloadImageTask(imageView);
+//        downloadImageTask.execute(recipe.getImagePath());
+        Ion.with(activity).load(recipe.getImagePath()).intoImageView(imageView);
         title.setText(recipe.getName());
         duration.setText(String.valueOf(recipe.getPreparationTime()) + " min");
         DifficultyLevel levl = DifficultyLevelServiceManager.getInstance().getLevelById(recipe.getDifficultyLevelID());
@@ -71,4 +83,29 @@ public class RecipeAdapter extends ArrayAdapter{
         // Return the completed view to render on screen
         return convertView;
     }
+
+//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+//        ImageView bmImage;
+//
+//        public DownloadImageTask(ImageView bmImage) {
+//            this.bmImage = bmImage;
+//        }
+//
+//        protected Bitmap doInBackground(String... urls) {
+//            String urldisplay = urls[0];
+//            Bitmap mIcon11 = null;
+//            try {
+//                InputStream in = new java.net.URL(urldisplay).openStream();
+//                mIcon11 = BitmapFactory.decodeStream(in);
+//            } catch (Exception e) {
+//                Log.e("Error", e.getMessage());
+//                e.printStackTrace();
+//            }
+//            return mIcon11;
+//        }
+//
+//        protected void onPostExecute(Bitmap result) {
+//            bmImage.setImageBitmap(result);
+//        }
+//    }
 }

@@ -1,9 +1,12 @@
 package com.example.cukier.cukier;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,9 +18,9 @@ import com.example.cukier.cukier.comparators.RecipeTimeComparator;
 import com.example.cukier.cukier.model.Recipe;
 import com.example.cukier.cukier.service.RecipeServiceManager;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,10 +30,12 @@ public class MainActivity extends AppCompatActivity {
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipeList;
     private AdView mAdView;
+    private MainActivity mmm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.mmm = this;
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -74,6 +79,48 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                recipeAdapter = new RecipeAdapter(mmm, recipeList);
+                root.setAdapter(recipeAdapter);
+
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(query.equals("")){
+                    recipeAdapter = new RecipeAdapter(mmm, recipeList);
+                    root.setAdapter(recipeAdapter);
+                }else if(!query.equals("")){
+                    List<Recipe> newRecipeList = new ArrayList<Recipe>();
+
+                    for(Recipe r: recipeList){
+                        if( r.getName().toLowerCase().contains(query.toLowerCase())){
+                            newRecipeList.add(r);
+                        }
+                    }
+                    recipeAdapter = new RecipeAdapter(mmm, newRecipeList);
+                    root.setAdapter(recipeAdapter);
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -114,5 +161,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("recipe", recipe);
         intent.putExtra("level", level);
         startActivity(intent);
+    }
+
+    public void defaultScreen(MenuItem item) {
+        recipeAdapter = new RecipeAdapter(this, recipeList);
+        root.setAdapter(recipeAdapter);
     }
 }

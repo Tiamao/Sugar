@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:id="@+id/acts"
+    android:layout_above="@id/adView"
+    android:layout_marginBottom="15dp"
     android:layout_height="match_parent">
 
     <ListView
@@ -9,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:dividerHeight="15dp"
+        >
 
     </ListView>
 
